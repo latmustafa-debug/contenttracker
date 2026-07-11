@@ -65,6 +65,14 @@
     return brand.entries.length;
   }
 
+  function totalPay(brand) {
+    return totalCount(brand) * (brand.rate || 0);
+  }
+
+  function formatMoney(amount) {
+    return "$" + amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
   // ---------- entry mutation ----------
 
   function addEntry(brand) {
@@ -169,6 +177,7 @@
       '<div class="stats-block">' +
         '<div class="stat-total">' + total + " / " + goal + "</div>" +
         '<div class="stat-total-label">' + escapeHtml(brand.name) + " &middot; Total Deliverables</div>" +
+        (brand.rate ? '<div class="stat-pay">' + formatMoney(totalPay(brand)) + " earned</div>" : "") +
       "</div>" +
       '<div class="stat-pills">' +
         '<div class="stat-pill"><div class="stat-pill-value">' + week + " / " + (brand.weeklyGoal || 0) + '</div><div class="stat-pill-label">This Week</div></div>' +
@@ -230,6 +239,10 @@
         '<label class="form-label">Total Deliverables</label>' +
         '<input class="form-input" id="totalInput" type="number" inputmode="numeric" placeholder="e.g. 40" value="' + (editing ? editing.totalGoal : "") + '">' +
       "</div>" +
+      '<div class="form-group">' +
+        '<label class="form-label">Rate Per Deliverable ($)</label>' +
+        '<input class="form-input" id="rateInput" type="number" inputmode="decimal" step="0.01" placeholder="e.g. 25" value="' + (editing && editing.rate ? editing.rate : "") + '">' +
+      "</div>" +
       '<div class="form-row">' +
         '<div class="form-group">' +
           '<label class="form-label">Weekly Goal</label>' +
@@ -251,6 +264,7 @@
     document.getElementById("saveBtn").onclick = function () {
       var name = document.getElementById("nameInput").value.trim();
       var total = parseInt(document.getElementById("totalInput").value, 10);
+      var rate = parseFloat(document.getElementById("rateInput").value);
       var weekly = parseInt(document.getElementById("weeklyInput").value, 10);
       var monthly = parseInt(document.getElementById("monthlyInput").value, 10);
 
@@ -262,6 +276,7 @@
       if (editing) {
         editing.name = name;
         editing.totalGoal = total;
+        editing.rate = isNaN(rate) || rate < 0 ? 0 : rate;
         editing.weeklyGoal = weekly || 0;
         editing.monthlyGoal = monthly || 0;
         saveData();
@@ -272,6 +287,7 @@
           id: uid(),
           name: name,
           totalGoal: total,
+          rate: isNaN(rate) || rate < 0 ? 0 : rate,
           weeklyGoal: weekly || 0,
           monthlyGoal: monthly || 0,
           entries: [],

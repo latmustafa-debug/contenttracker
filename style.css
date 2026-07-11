@@ -158,6 +158,14 @@ button, input {
   margin-top: 4px;
 }
 
+.stat-pay {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--bonus);
+  margin-top: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
 .stat-pills {
   display: flex;
   gap: 10px;

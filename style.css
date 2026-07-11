@@ -101,6 +101,15 @@ button, input {
 
 .brand-tally.hit { color: var(--bonus); }
 
+.brand-pay {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bonus);
+  text-align: right;
+  margin: -6px 0 10px;
+  font-variant-numeric: tabular-nums;
+}
+
 .progress-track {
   height: 3px;
   background: var(--divider);

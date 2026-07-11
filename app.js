@@ -116,6 +116,7 @@
             '<div class="brand-name">' + escapeHtml(brand.name) + "</div>" +
             '<div class="brand-tally' + (hit ? " hit" : "") + '">' + total + " / " + goal + "</div>" +
           "</div>" +
+          (brand.rate ? '<div class="brand-pay">' + formatMoney(totalPay(brand)) + " earned</div>" : "") +
           '<div class="progress-track"><div class="progress-fill' + (hit ? " hit" : "") + '" style="width:' + pct + '%"></div></div>' +
         "</div>"
       );

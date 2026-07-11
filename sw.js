@@ -1,4 +1,4 @@
-var CACHE = "ugc-tracker-v1";
+var CACHE = "ugc-tracker-v2";
 var FILES = [
   "./",
   "./index.html",
